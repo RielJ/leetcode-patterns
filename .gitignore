@@ -1,0 +1,17 @@
+# macOS and editors
+.DS_Store
+*.swp
+*.swo
+
+# Local LeetCode state (authentication normally lives outside this repo)
+cookie*
+problemlist*
+body
+.cache/
+
+# Local tooling
+node_modules/
+coverage/
+*.log
+
+.pi
