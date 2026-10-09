@@ -1,12 +1,17 @@
 // @leet start
 function repeatedSubstringPattern(s: string): boolean {
-  for (let i = 1; i <= s.length / 2; i++) {
-    if (s.length % i !== 0) continue;
+  const lps = new Int32Array(s.length);
 
-    const substr = s.substring(0, i);
-    const replaced = s.replaceAll(substr, "");
-    if (replaced === "") return true;
+  let len = 0;
+  for (let i = 1; i < s.length; i++) {
+    while (len > 0 && s[i] !== s[len]) len = lps[len - 1];
+    if (s[i] === s[len]) len++;
+    lps[i] = len;
   }
-  return false;
+
+  return (
+    lps[s.length - 1] !== 0 &&
+    lps[s.length - 1] % (s.length - lps[s.length - 1]) === 0
+  );
 }
 // @leet end
