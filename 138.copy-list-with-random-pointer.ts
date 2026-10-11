@@ -14,7 +14,7 @@
  * }
  */
 
-function copyRandomList(head: _Node | null): _Node | null {
+function copyRandomListv2(head: _Node | null): _Node | null {
   const nodes = new Map<_Node | null, _Node | null>();
   nodes.set(null, null);
 
@@ -33,5 +33,25 @@ function copyRandomList(head: _Node | null): _Node | null {
   }
 
   return newHead;
+}
+
+function copyRandomList(head: _Node | null): _Node | null {
+  for (let node = head; node; node = node.next.next) {
+    node.next = new _Node(node.val, node.next ?? undefined);
+  }
+
+  for (let node = head; node?.next; node = node.next.next) {
+    node.next.random = node.random?.next ?? null;
+  }
+
+  const copyHead = head?.next ?? null;
+  for (let node = head; node?.next; node = node.next) {
+    const nextOrig = node.next.next ?? null;
+
+    node.next.next = nextOrig?.next ?? null;
+    node.next = nextOrig;
+  }
+
+  return copyHead;
 }
 // @leet end
