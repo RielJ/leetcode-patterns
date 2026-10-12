@@ -12,25 +12,19 @@
  */
 
 function oddEvenList(head: ListNode | null): ListNode | null {
-  let node = head;
-  let evenHead = head?.next ?? null;
+  if (!head) return head;
+  const evenHead = head.next;
   let odd = head;
+  let even = evenHead;
 
-  let i = 1;
-  while (node?.next) {
-    let prev = node.next;
-    node.next = node.next.next;
-
-    if (i % 2 === 0) {
-      odd = prev;
-    }
-
-    node = prev;
-    i++;
+  while (even?.next) {
+    odd.next = even.next; // odd skips over even
+    odd = odd.next;
+    even.next = odd.next; // even skips over the new odd
+    even = even.next;
   }
 
-  if (odd) odd.next = evenHead;
-
+  odd.next = evenHead;
   return head;
 }
 // @leet end
