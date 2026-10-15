@@ -1,23 +1,21 @@
 // @leet start
 function jump(nums: number[]): number {
   const n = nums.length;
-  if (n === 1) return 0;
-  let furthest = nums[0];
-  let minJumps = 0;
+  let furthest = 0;
+  let end = 0;
+  let jumps = 0;
 
-  for (let i = 0; i < n && i <= furthest; i++) {
-    if (furthest >= n - 1) return minJumps + 1;
-    let j = furthest;
-    const prev = furthest;
-    while (j > i) {
-      const num = nums[j];
-      if (furthest < num + j) furthest = num + j;
-      j--;
+  for (let i = 0; i < n - 1 && i <= furthest; i++) {
+    const reach = nums[i] + i;
+    if (furthest < reach) {
+      furthest = reach;
     }
-    i = prev - 1;
-    minJumps++;
+    if (end === i) {
+      jumps++;
+      end = furthest;
+    }
   }
-  if (furthest >= n - 1) return minJumps + 1;
-  return minJumps;
+
+  return jumps;
 }
 // @leet end
