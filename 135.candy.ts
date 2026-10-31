@@ -1,30 +1,29 @@
 // @leet start
 function candy(ratings: number[]): number {
   const n = ratings.length;
-  const candies = Array(n).fill(1);
-  let total = n;
+  let up = 0;
+  let down = 0;
+  let peak = 0;
 
+  let total = 1;
   for (let i = 1; i < n; i++) {
-    const cur = ratings[i];
-    const prev = ratings[i - 1];
-
-    if (cur > prev) {
-      total = total - candies[i] + candies[i - 1] + 1;
-      candies[i] = candies[i - 1] + 1;
+    if (ratings[i] > ratings[i - 1]) {
+      up++;
+      total += up + 1;
+      peak = up;
+      down = 0;
+    } else if (ratings[i] === ratings[i - 1]) {
+      up = 0;
+      down = 0;
+      peak = 0;
+      total++;
+    } else {
+      down++;
+      total += down;
+      if (peak < down) total++;
+      up = 0;
     }
   }
-
-  for (let i = n; i >= 0; i--) {
-    const cur = ratings[i];
-    const prev = ratings[i + 1];
-
-    if (cur > prev && candies[i] < candies[i + 1] + 1) {
-      total = total - candies[i] + candies[i + 1] + 1;
-      candies[i] = candies[i + 1] + 1;
-    }
-  }
-
-  console.log(candies, total);
 
   return total;
 }
